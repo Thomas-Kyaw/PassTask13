@@ -365,15 +365,12 @@ namespace PassTask13
                 return true;
 
             // Check in Admin's Merchants list
-            foreach (Admin admin in Data.Admins)
-            {
-                if (admin.Merchants.Any(m => m.email == email))
+                if (Admin.Merchants.Any(m => m.email == email))
                     return true;
 
                 // Check in Admin's Customers list
-                if (admin.Customers.Any(c => c.email == email))
-                    return true;
-            }
+                if (Admin.Customers.Any(c => c.email == email))
+
             
             return false;
         }

@@ -6,14 +6,14 @@ namespace PassTask13
     public class Admin : User
     {
         private static List<Merchant> merchants = new List<Merchant>();
-        private List<Customer> customers = new List<Customer>();
+        private static List<Customer> customers = new List<Customer>();
 
         public static List<Merchant> Merchants
         {
             get{return merchants;}
         }
 
-        public List<Customer> Customers
+        public static List<Customer> Customers
         {
             get{return customers;}
         }
