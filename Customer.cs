@@ -23,7 +23,22 @@ namespace PassTask13
 
         public bool Subscribe(Merchant merchant)
         {
+            Console.WriteLine("Select a merchant to check their products:");
 
+            for (int i = 0; i < Admin.Merchants.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Admin.Merchants[i].username}");
+            }
+            int merchantChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out merchantChoice) || merchantChoice < 1 || merchantChoice > merchants.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid merchant.");
+                }
+            } while (merchantChoice < 1 || merchantChoice > merchants.Count);
+
+            Merchant selectedMerchant = merchants[merchantChoice - 1];
         }
 
         public bool Unsubscribe(Merchant merchant)

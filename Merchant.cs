@@ -28,32 +28,30 @@ namespace PassTask13
             set{products = value;}
         }
 
+        public List<Customer> Subscribers
+        {
+            get{return subscribers;}
+            set{subscribers = value;}
+        }
+
         public void AddProduct()
         {
             Product addedProduct = new Product(this);
-            
             Console.WriteLine("----Adding your product----");
-            
             Console.WriteLine("Enter the name of the product");
             addedProduct.Name = Console.ReadLine();
-            
             Console.WriteLine("Enter the product category");
             addedProduct.Category = Console.ReadLine();
             
-            Console.WriteLine("Enter the price");
-            if (float.TryParse(Console.ReadLine(), out float enteredPrice))
+            float enteredPrice;
+            do
             {
-                addedProduct.Price = enteredPrice;
-            }
-            else
-            {
-                Console.WriteLine("Invalid price entered. Product not added.");
-                return;
-            }
+                Console.WriteLine("Enter the price");
+            } while (!float.TryParse(Console.ReadLine(), out enteredPrice));
             
-            addedProduct.Status = ProductStatus.PENDING; // Set the product's status to PENDING
+            addedProduct.Price = enteredPrice;
+            addedProduct.Status = ProductStatus.PENDING;
             Data.RegisteredProducts.Add(addedProduct);
-            
             Console.WriteLine("Product added and awaits approval.");
         }
 
@@ -121,11 +119,37 @@ namespace PassTask13
 
         public void DeleteProduct()
         {
+            if (products.Count == 0)
+            {
+                Console.WriteLine($"{username} has no products.");
+                return;
+            }
 
+            Console.WriteLine("Select a product to edit");
+            for (int i = 0; i < products.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {products[i].Id}. {products[i].Name}. {products[i].Price}");
+            }
+            int productChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out productChoice) || productChoice < 1 || productChoice > products.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid product.");
+                }
+            } while (productChoice < 1 || productChoice > products.Count);
+
+            Product selectedProduct = products[productChoice - 1];
+            products.Remove(selectedProduct);
+            Console.WriteLine("Product removed successfully");
         }
-        public List<Product> ViewProduct()
+        public void ViewProducts()
         {
-
+            Console.WriteLine("The products you have listed--");
+            for(int i = 0;i < products.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {products[i].Id}. {products[i].Name}. {products[i].Category}. {products[i].Price}");
+            }
         }
         public bool ManageOrder(Order order, string action)
         {
