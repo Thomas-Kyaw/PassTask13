@@ -5,10 +5,10 @@ namespace PassTask13
 {
     public class Admin : User
     {
-        private List<Merchant> merchants = new List<Merchant>();
+        private static List<Merchant> merchants = new List<Merchant>();
         private List<Customer> customers = new List<Customer>();
 
-        public List<Merchant> Merchants
+        public static List<Merchant> Merchants
         {
             get{return merchants;}
         }
@@ -62,8 +62,12 @@ namespace PassTask13
 
         public void RejectProduct(Product chosenProduct)
         {
+            chosenProduct.Status = ProductStatus.REJECTED;
+
+            chosenProduct.Merchant.Products.Remove(chosenProduct); 
             Data.RegisteredProducts.Remove(chosenProduct);
             Data.RejectedProducts.Add(chosenProduct);
+
             Console.WriteLine($"Product {chosenProduct.Name} has been rejected and removed from pending products.");
         }
 

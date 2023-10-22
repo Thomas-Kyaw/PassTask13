@@ -16,12 +16,21 @@ namespace PassTask13
         public Merchant(string Username, string Email, string Password) 
             : base(Username, Email, Password) { }
         
+        public MerchantCategory MerchantCategory
+        {
+            get{return merchantCategory;}
+        }
+
         public MerchantStatus RegistrationStatus
         {
             get{return registrationStatus;}
             set{registrationStatus = value;}
         }
 
+        public string Username
+        {
+            get{return base.username;}
+        }
         public List<Product> Products
         {
             get{return products;}
