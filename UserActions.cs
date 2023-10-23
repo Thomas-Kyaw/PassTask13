@@ -67,16 +67,16 @@ namespace PassTask13
                 switch (choice1)
                 {
                     case 1:
-                        ApproveCustomer(loggedInAdmin);
+                        ApproveCustomer();
                         break;
                     case 2:
-                        RejectCustomer(loggedInAdmin);
+                        RejectCustomer();
                         break;
                     case 3:
-                        ApproveMerchant(loggedInAdmin); 
+                        ApproveMerchant(); 
                         break;
                     case 4:
-                        RejectMerchant(loggedInAdmin);
+                        RejectMerchant();
                         break;
                     case 5:
                         break;
@@ -215,7 +215,7 @@ namespace PassTask13
 
         // Other methods to be added
 
-        public static void ApproveMerchant(Admin admin)
+        public static void ApproveMerchant()
         {
             if (Data.RegisteredMerchants.Count == 0)
             {
@@ -243,13 +243,13 @@ namespace PassTask13
             selectedMerchant.RegistrationStatus = MerchantStatus.APPROVED;
 
             // Move the merchant from RegisteredMerchants list to the admin's Merchants list
-            admin.Merchants.Add(selectedMerchant);
+            Admin.Merchants.Add(selectedMerchant);
             Data.RegisteredMerchants.RemoveAt(merchantChoice - 1);
 
             Console.WriteLine($"Merchant {selectedMerchant.username} approved successfully!");
         }
 
-        public static void RejectMerchant(Admin admin)
+        public static void RejectMerchant()
         {
             if (Data.RegisteredMerchants.Count == 0)
             {
@@ -282,7 +282,7 @@ namespace PassTask13
             Console.WriteLine($"Merchant {selectedMerchant.username} rejected successfully!");
         }
 
-        public static void ApproveCustomer(Admin admin)
+        public static void ApproveCustomer()
         {
             if (Data.RegisteredCustomers.Count == 0)
             {
@@ -311,14 +311,14 @@ namespace PassTask13
             Customer selectedCustomer = Data.RegisteredCustomers[customerChoice - 1];
             selectedCustomer.CustomerStatus = CustomerStatus.APPROVED;
 
-            admin.Customers.Add(selectedCustomer);
+            Admin.Customers.Add(selectedCustomer);
             Data.RegisteredCustomers.RemoveAt(customerChoice - 1);
 
 
             Console.WriteLine($"Customer {selectedCustomer.username} approved successfully!");
         }
 
-        public static void RejectCustomer(Admin admin)
+        public static void RejectCustomer()
         {
             if (Data.RegisteredCustomers.Count == 0)
             {
@@ -370,7 +370,7 @@ namespace PassTask13
 
                 // Check in Admin's Customers list
                 if (Admin.Customers.Any(c => c.email == email))
-
+                    return true;
             
             return false;
         }

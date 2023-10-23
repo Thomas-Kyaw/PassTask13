@@ -7,6 +7,7 @@ namespace PassTask13
     {
         APPROVED,
         REJECTED,
+        PENDING,
         SHIPPED,
         DELIVERED
     }

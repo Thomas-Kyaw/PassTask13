@@ -14,7 +14,10 @@ namespace PassTask13
 
         public Merchant() { }  // Parameterless constructor
         public Merchant(string Username, string Email, string Password) 
-            : base(Username, Email, Password) { }
+            : base(Username, Email, Password) 
+            {
+                merchantCategory = MerchantCategory.OTHERS;
+            }
         
         public MerchantCategory MerchantCategory
         {
@@ -47,22 +50,36 @@ namespace PassTask13
         {
             Product addedProduct = new Product(this);
             Console.WriteLine("----Adding your product----");
-            Console.WriteLine("Enter the name of the product");
-            addedProduct.Name = Console.ReadLine();
-            Console.WriteLine("Enter the product category");
-            addedProduct.Category = Console.ReadLine();
-            
+
+            string input1;
+            do
+            {
+                Console.WriteLine("Enter the name of the product");
+                input1 = Console.ReadLine();
+            } while (string.IsNullOrEmpty(input1));
+            addedProduct.Name = input1;
+
+            string input2;
+            do
+            {
+                Console.WriteLine("Enter the product category");
+                input2 = Console.ReadLine();
+            } while (string.IsNullOrEmpty(input2));
+
+            addedProduct.Category = input2; // This will validate and set the category using the property's setter
+
             float enteredPrice;
             do
             {
                 Console.WriteLine("Enter the price");
             } while (!float.TryParse(Console.ReadLine(), out enteredPrice));
-            
+
             addedProduct.Price = enteredPrice;
             addedProduct.Status = ProductStatus.PENDING;
             Data.RegisteredProducts.Add(addedProduct);
             Console.WriteLine("Product added and awaits approval.");
         }
+
 
         public void EditProduct()
         {
@@ -109,8 +126,17 @@ namespace PassTask13
                     selectedProduct.Name = Console.ReadLine();
                     break;
                 case 2:
-                    Console.WriteLine("Enter the new category for the product:");
-                    selectedProduct.Category = Console.ReadLine();
+                    string newCategory;
+                    do
+                    {
+                        Console.WriteLine("Enter the new category for the product:");
+                        newCategory = Console.ReadLine();
+                        if (string.IsNullOrEmpty(newCategory))
+                        {
+                            Console.WriteLine("Category cannot be empty. Please enter a valid category.");
+                        }
+                    } while (string.IsNullOrEmpty(newCategory));
+                    selectedProduct.Category = newCategory; // This will validate and set the category using the property's setter
                     break;
                 case 3:
                     Console.WriteLine("Enter the new price for the product:");
@@ -125,6 +151,8 @@ namespace PassTask13
 
             Console.WriteLine($"Product {selectedProduct.Id} updated successfully!");
         }
+
+
 
         public void DeleteProduct()
         {
@@ -160,13 +188,13 @@ namespace PassTask13
                 Console.WriteLine($"{i + 1}. {products[i].Id}. {products[i].Name}. {products[i].Category}. {products[i].Price}");
             }
         }
-        public bool ManageOrder(Order order, string action)
+        public void ManageOrder(Order order, string action)
         {
 
         }
         public List<Invoice> viewInvoices()
         {
-
+            return new List<Invoice>();
         }
 
     }

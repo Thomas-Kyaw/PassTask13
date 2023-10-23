@@ -8,7 +8,6 @@ namespace PassTask13
         private int coupons;
         private List<Order> orders = new List<Order>();
         private List<Merchant> subscribedMerchants =  new List<Merchant>();
-
         private CustomerStatus customerStatus;
         public Customer() { }
 
@@ -158,15 +157,101 @@ namespace PassTask13
             }
         }
 
-
-        public Order OrderProduct(Product product, string paymentType)
+        public Order OrderProduct()
         {
+            if (subscribedMerchants.Count == 0)
+            {
+                Console.WriteLine("You are not subscribed to any merchants.");
+                return null;
+            }
 
+            Console.WriteLine("Select a merchant from your subscribed list:");
+            for (int i = 0; i < subscribedMerchants.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {subscribedMerchants[i].username}");
+            }
+
+            int merchantChoice;
+            if (!int.TryParse(Console.ReadLine(), out merchantChoice) || merchantChoice < 1 || merchantChoice > subscribedMerchants.Count)
+            {
+                Console.WriteLine("Invalid merchant choice.");
+                return null;
+            }
+
+            Merchant selectedMerchant = subscribedMerchants[merchantChoice - 1];
+            var products = selectedMerchant.Products;
+
+            Console.WriteLine($"Select a product from {selectedMerchant.username}:");
+            for (int i = 0; i < products.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {products[i].Name} - ${products[i].Price}");
+            }
+
+            int productChoice;
+            if (!int.TryParse(Console.ReadLine(), out productChoice) || productChoice < 1 || productChoice > products.Count)
+            {
+                Console.WriteLine("Invalid product choice.");
+                return null;
+            }
+
+            Product selectedProduct = products[productChoice - 1];
+
+            Console.WriteLine("Enter payment type (1. Credit, 2. Debit, 3. Cash):");
+            int paymentChoice;
+            if (!int.TryParse(Console.ReadLine(), out paymentChoice) || paymentChoice < 1 || paymentChoice > 3)
+            {
+                Console.WriteLine("Invalid payment type choice.");
+                return null;
+            }
+
+            PaymentType selectedPaymentType = (PaymentType)paymentChoice;
+
+            Order newOrder = new Order(this, selectedProduct, selectedPaymentType);
+            orders.Add(newOrder);
+
+            Console.WriteLine($"Ordered {selectedProduct.Name} using {selectedPaymentType}.");
+            return newOrder;
         }
 
-        public void RateProduct(Product product, int rating)
-        {
 
+        public void RateProduct()
+        {
+            Console.WriteLine("Rating an order");
+            if(orders.Count < 1)
+            {
+                Console.WriteLine("Sorry. You haven't made any Orders");
+                return;
+            }
+            Console.WriteLine("Select a product you have ordered:");
+
+            for (int i = 0; i < orders.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {orders[i].Product.Name}");
+            }
+            int rateChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out rateChoice) || rateChoice < 1 || rateChoice > orders.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid ordered product.");
+                }
+            } while (rateChoice < 1 || rateChoice > orders.Count);
+
+            Product selectedProduct = orders[rateChoice - 1].Product;
+            float rating = 0;
+            do
+            {
+                Console.WriteLine("Enter the rating you want to give (1 to 5):"); // Adjusted the message here
+                if(!float.TryParse(Console.ReadLine(), out rating) || rating < 1 || rating > 5)
+                {
+                    Console.WriteLine("Invalid rating. Rating can be 1 to 5.");
+                }
+                else
+                {
+                    selectedProduct.AddRating(rating);
+                }
+            } while (rating < 1 || rating > 5);
         }
+
     }
 }
