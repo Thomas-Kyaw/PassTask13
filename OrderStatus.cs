@@ -9,6 +9,7 @@ namespace PassTask13
         REJECTED,
         PENDING,
         SHIPPED,
-        DELIVERED
+        DELIVERED,
+        CANCELLED
     }
 }

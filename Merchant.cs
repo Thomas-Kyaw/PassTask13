@@ -30,6 +30,12 @@ namespace PassTask13
             set{registrationStatus = value;}
         }
 
+        public List<Order> Orders
+        {
+            get{return orders;}
+            set{orders = value;}
+        }
+
         public string Username
         {
             get{return base.username;}
@@ -131,12 +137,12 @@ namespace PassTask13
                     {
                         Console.WriteLine("Enter the new category for the product:");
                         newCategory = Console.ReadLine();
-                        if (string.IsNullOrEmpty(newCategory))
+                        if (string.IsNullOrEmpty(newCategory) || !IsValidCategory(newCategory))
                         {
-                            Console.WriteLine("Category cannot be empty. Please enter a valid category.");
+                            Console.WriteLine("Invalid category. Please enter a valid category.");
                         }
-                    } while (string.IsNullOrEmpty(newCategory));
-                    selectedProduct.Category = newCategory; // This will validate and set the category using the property's setter
+                    } while (string.IsNullOrEmpty(newCategory) || !IsValidCategory(newCategory));
+                    selectedProduct.Category = newCategory; 
                     break;
                 case 3:
                     Console.WriteLine("Enter the new price for the product:");
@@ -151,8 +157,6 @@ namespace PassTask13
 
             Console.WriteLine($"Product {selectedProduct.Id} updated successfully!");
         }
-
-
 
         public void DeleteProduct()
         {
@@ -188,13 +192,90 @@ namespace PassTask13
                 Console.WriteLine($"{i + 1}. {products[i].Id}. {products[i].Name}. {products[i].Category}. {products[i].Price}");
             }
         }
-        public void ManageOrder(Order order, string action)
-        {
 
+        public void ManageOrder()
+        {
+            if (orders.Count == 0)
+            {
+                Console.WriteLine($"{username} has no orders to manage.");
+                return;
+            }
+
+            Console.WriteLine("Select an order to manage:");
+            for (int i = 0; i < orders.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. Order ID: {orders[i].Id}, Product: {orders[i].Product.Name}, Status: {orders[i].Status}");
+            }
+
+            int orderChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out orderChoice) || orderChoice < 1 || orderChoice > orders.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid order.");
+                }
+            } while (orderChoice < 1 || orderChoice > orders.Count);
+
+            Order selectedOrder = orders[orderChoice - 1];
+
+            Console.WriteLine("Select which action you'd like to take:");
+            Console.WriteLine("1. Accept");
+            Console.WriteLine("2. Decline");
+            Console.WriteLine("3. Mark as Shipped");
+            Console.WriteLine("4. Mark as Delivered");
+            Console.WriteLine("5. Cancel");
+
+            int actionChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out actionChoice) || actionChoice < 1 || actionChoice > 5)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid action.");
+                }
+            } while (actionChoice < 1 || actionChoice > 5);
+
+            switch (actionChoice)
+            {
+                case 1:
+                    selectedOrder.Status = OrderStatus.APPROVED;
+                    Console.WriteLine($"Order {selectedOrder.Id} has been accepted.");
+                    break;
+                case 2:
+                    selectedOrder.Status = OrderStatus.REJECTED;
+                    Console.WriteLine($"Order {selectedOrder.Id} has been declined.");
+                    break;
+                case 3:
+                    selectedOrder.Status = OrderStatus.SHIPPED;
+                    Console.WriteLine($"Order {selectedOrder.Id} has been marked as shipped.");
+                    break;
+                case 4:
+                    selectedOrder.Status = OrderStatus.DELIVERED;
+                    Console.WriteLine($"Order {selectedOrder.Id} has been marked as delivered.");
+                    break;
+                case 5:
+                    selectedOrder.Status = OrderStatus.CANCELLED;
+                    orders.Remove(selectedOrder);
+                    Data.CancelledOrders.Add(selectedOrder);  
+                    Console.WriteLine($"Order {selectedOrder.Id} has been cancelled.");
+                    break;
+            }
         }
+
+
         public List<Invoice> viewInvoices()
         {
             return new List<Invoice>();
+        }
+
+        private bool IsValidCategory(string category)
+        {
+            return Enum.IsDefined(typeof(FoodCategory), category) ||
+                Enum.IsDefined(typeof(ElectronicsCategory), category) ||
+                Enum.IsDefined(typeof(ToysCategory), category) ||
+                Enum.IsDefined(typeof(EntertainmentCategory), category) ||
+                Enum.IsDefined(typeof(FashionCategory), category) ||
+                Enum.IsDefined(typeof(LeisureCategory), category) ||
+                Enum.IsDefined(typeof(OthersCategory), category);
         }
 
     }

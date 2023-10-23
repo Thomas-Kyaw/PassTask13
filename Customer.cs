@@ -208,6 +208,7 @@ namespace PassTask13
 
             Order newOrder = new Order(this, selectedProduct, selectedPaymentType);
             orders.Add(newOrder);
+            selectedMerchant.Orders.Add(newOrder);
 
             Console.WriteLine($"Ordered {selectedProduct.Name} using {selectedPaymentType}.");
             return newOrder;
