@@ -7,6 +7,11 @@ namespace PassTask13
     {
         private int id;
         private Merchant merchant;
+        
+        public Invoice()
+        {
+            id = Data.NextInvoiceId++;
+        }
         public float CalculateTotal()
         {
             

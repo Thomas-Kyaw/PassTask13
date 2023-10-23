@@ -268,7 +268,7 @@ namespace PassTask13
         }
 
         private bool IsValidCategory(string category)
-        {
+        { 
             return Enum.IsDefined(typeof(FoodCategory), category) ||
                 Enum.IsDefined(typeof(ElectronicsCategory), category) ||
                 Enum.IsDefined(typeof(ToysCategory), category) ||

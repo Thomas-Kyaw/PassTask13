@@ -20,6 +20,16 @@ namespace PassTask13
             set{customerStatus = value;}
         }
 
+        public List<Order> Orders 
+        {
+            get{return orders;}
+        }
+
+        public List<Merchant> SubscribedMerchants
+        {
+            get{return subscribedMerchants;}
+        }
+
         public void Subscribe()
         {
             if(Admin.Merchants.Count < 1)

@@ -22,8 +22,13 @@ namespace PassTask13
             
         }
 
-        public List<Product> CheckProductsByMerchant()
+        public void CheckProductsByMerchant()
         {
+            if(merchants.Count < 1)
+            {
+                Console.WriteLine("No merchants registered");
+            }
+
             Console.WriteLine("Select a merchant to check their products:");
 
             for (int i = 0; i < merchants.Count; i++)
@@ -47,7 +52,7 @@ namespace PassTask13
                 output.Add(product);
             }
 
-            return output;
+            //return output;
         }
         public void ApproveProduct(Product chosenProduct)
         {
@@ -126,9 +131,48 @@ namespace PassTask13
 
         }
 
-        public Customer ViewCustomerProfile()
+        public void ViewCustomerProfile()
         {
+            if(customers.Count < 1)
+            {
+                Console.WriteLine("No registered Customers");
+                return;
+            }
 
+            Console.WriteLine("Choose the customer");
+            for(int i = 0; i < customers.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {customers[i].username}");
+            }
+
+            int customerChoice;
+            do
+            {
+                if(!int.TryParse(Console.ReadLine(), out customerChoice) || customerChoice < 1 || customerChoice > customers.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid customer.");
+                }
+            } while(customerChoice < 1 || customerChoice > customers.Count);
+
+            Customer selectedCustomer = customers[customerChoice - 1];
+            Console.WriteLine("Displaying selected customer details");
+            Console.WriteLine($"Name - {selectedCustomer.username}");
+            Console.WriteLine($"Email - {selectedCustomer.email}");
+            Console.WriteLine($"Subscribed to {selectedCustomer.SubscribedMerchants.Count} merchants");
+
+            if(selectedCustomer.Orders.Count > 0)
+            {
+                Console.WriteLine("Orders made by the customer:");
+                foreach(Order order in selectedCustomer.Orders)
+                {
+                    Console.WriteLine($"Order ID: {order.Id}, Product: {order.Product.Name}, Status: {order.Status}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("The customer has not made any orders.");
+            }
         }
+
     }   
 }

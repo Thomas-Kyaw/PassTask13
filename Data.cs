@@ -20,6 +20,8 @@ namespace PassTask13
 
         public static int NextOrderId = 1;
 
+        public static int NextInvoiceId = 1;
+
         public static List<Product> RegisteredProducts = new List<Product>();
         public static List<Product> RejectedProducts = new List<Product>();
         public static List<Order> CancelledOrders = new List<Order>();
