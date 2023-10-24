@@ -126,9 +126,37 @@ namespace PassTask13
             }
         }
 
-        public Invoice GetInvoice(Merchant merchant)
+        public void GetInvoice()
         {
+            if (merchants.Count == 0)
+            {
+                Console.WriteLine("No registered merchants.");
+                return;
+            }
 
+            Console.WriteLine("Select a merchant to get the invoice for:");
+            for (int i = 0; i < merchants.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {merchants[i].Username}");
+            }
+
+            int merchantChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out merchantChoice) || merchantChoice < 1 || merchantChoice > merchants.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid merchant.");
+                }
+            } while (merchantChoice < 1 || merchantChoice > merchants.Count);
+
+            Merchant selectedMerchant = merchants[merchantChoice - 1];
+
+            Invoice invoice = new Invoice(selectedMerchant);
+
+            float totalAmount = invoice.CalculateTotal();
+
+            Console.WriteLine($"Invoice for Merchant: {selectedMerchant.Username}");
+            Console.WriteLine($"Total Amount: ${totalAmount}");
         }
 
         public void ViewCustomerProfile()

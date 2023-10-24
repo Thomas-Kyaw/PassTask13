@@ -25,5 +25,7 @@ namespace PassTask13
         public static List<Product> RegisteredProducts = new List<Product>();
         public static List<Product> RejectedProducts = new List<Product>();
         public static List<Order> CancelledOrders = new List<Order>();
+
+        public static List<Invoice> AllInvoices = new List<Invoice>();
     }
 }

@@ -17,12 +17,6 @@ namespace PassTask13
             password = Password;
         }
 
-        public virtual bool Login()
-        {
-            // Add logic here or in the derived classes.
-            return false;
-        }
-
         public void SetDetails(string Username, string Email, string Password)
         {
             username = Username;
