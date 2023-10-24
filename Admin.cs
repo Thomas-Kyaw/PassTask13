@@ -128,6 +128,29 @@ namespace PassTask13
 
         public void GetInvoice()
         {
+            if (customers.Count == 0)
+            {
+                Console.WriteLine("No registered customers.");
+                return;
+            }
+
+            Console.WriteLine("Select a customer:");
+            for (int i = 0; i < customers.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {customers[i].username}");
+            }
+
+            int customerChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out customerChoice) || customerChoice < 1 || customerChoice > customers.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid customer.");
+                }
+            } while (customerChoice < 1 || customerChoice > customers.Count);
+
+            Customer selectedCustomer = customers[customerChoice - 1];
+
             if (merchants.Count == 0)
             {
                 Console.WriteLine("No registered merchants.");
@@ -151,11 +174,12 @@ namespace PassTask13
 
             Merchant selectedMerchant = merchants[merchantChoice - 1];
 
-            Invoice invoice = new Invoice(selectedMerchant);
+            Invoice invoice = new Invoice(selectedMerchant, selectedCustomer); // Pass the selected customer here
+            Data.AllInvoices.Add(invoice);
 
             float totalAmount = invoice.CalculateTotal();
 
-            Console.WriteLine($"Invoice for Merchant: {selectedMerchant.Username}");
+            Console.WriteLine($"Invoice for Customer: {selectedCustomer.username}, Merchant: {selectedMerchant.Username}");
             Console.WriteLine($"Total Amount: ${totalAmount}");
         }
 

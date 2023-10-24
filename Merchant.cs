@@ -261,11 +261,26 @@ namespace PassTask13
             }
         }
 
-
-        public List<Invoice> viewInvoices()
+        public void ViewInvoices()
         {
-            return new List<Invoice>();
+            var merchantInvoices = Data.AllInvoices.Where(invoice => invoice.Merchant == this).ToList();
+
+            if (merchantInvoices.Count == 0)
+            {
+                Console.WriteLine("You have no invoices.");
+                return;
+            }
+
+            Console.WriteLine("Your Invoices:");
+            foreach (var invoice in merchantInvoices)
+            {
+                float totalAmount = invoice.CalculateTotal();
+                Console.WriteLine($"Invoice for Customer: {invoice.Customer.username}");
+                Console.WriteLine($"Total Amount: ${totalAmount}");
+                Console.WriteLine("----------------------------");
+            }
         }
+
 
         private bool IsValidCategory(string category)
         { 
