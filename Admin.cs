@@ -64,7 +64,6 @@ namespace PassTask13
             Console.WriteLine($"Product {chosenProduct.Name} approved successfully!");
         }
 
-
         public void RejectProduct(Product chosenProduct)
         {
             chosenProduct.Status = ProductStatus.REJECTED;

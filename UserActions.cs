@@ -49,48 +49,65 @@ namespace PassTask13
             {
                 int choice1 = 0;
                 do{
-                    Console.WriteLine($"Logged in as {loggedInAdmin.username}");
-                    Console.WriteLine("1. Approve Customer");
-                    Console.WriteLine("2. Reject Customer");
-                    Console.WriteLine("3. Approve Merchant");
-                    Console.WriteLine("4. Reject Merchant");
-                    Console.WriteLine("5. Check products by Merchant");
-                    Console.WriteLine("6. Approve Product");
-                    Console.WriteLine("7. Reject Product");
-                    Console.WriteLine("8. Get Invoice");
-                    Console.WriteLine("9. View Customer Profile");
-                    if (!int.TryParse(Console.ReadLine(), out choice1))
+                        Console.WriteLine($"Logged in as {loggedInAdmin.username}");
+                        Console.WriteLine("1. Approve Customer");
+                        Console.WriteLine("2. Reject Customer");
+                        Console.WriteLine("3. Approve Merchant");
+                        Console.WriteLine("4. Reject Merchant");
+                        Console.WriteLine("5. Check products by Merchant");
+                        Console.WriteLine("6. Approve Product");
+                        Console.WriteLine("7. Reject Product");
+                        Console.WriteLine("8. Get Invoice");
+                        Console.WriteLine("9. View Customer Profile");
+                        Console.WriteLine("10. Logout");
+                        if (!int.TryParse(Console.ReadLine(), out choice1))
+                        {
+                            Console.WriteLine("Invalid input. Please enter a number.");
+                            continue;
+                        }
+                    
+                    switch (choice1)
                     {
-                        Console.WriteLine("Invalid input. Please enter a number.");
+                        case 1:
+                            ApproveCustomer();
+                            break;
+                        case 2:
+                            RejectCustomer();
+                            break;
+                        case 3:
+                            ApproveMerchant(); 
+                            break;
+                        case 4:
+                            RejectMerchant();
+                            break;
+                        case 5:
+                            loggedInAdmin.CheckProductsByMerchant();                        
+                            break;
+                        case 6:
+                            Product productToApprove = SelectProductFromRegisteredProducts();
+                            if (productToApprove != null)
+                            {
+                                loggedInAdmin.ApproveProduct(productToApprove);
+                            }
+                            break;
+                        case 7:
+                            Product productToReject = SelectProductFromRegisteredProducts();
+                            if (productToReject != null)
+                            {
+                                loggedInAdmin.RejectProduct(productToReject);
+                            }
+                            break;
+                        case 8:
+                            loggedInAdmin.GetInvoice();
+                            break;
+                        case 10:
+                            Console.WriteLine("Logged out successfully!");
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please select a valid option.");
+                            break;   
                     }
-                }while(choice1 < 1 || choice1 > 9);
-                switch (choice1)
-                {
-                    case 1:
-                        ApproveCustomer();
-                        break;
-                    case 2:
-                        RejectCustomer();
-                        break;
-                    case 3:
-                        ApproveMerchant(); 
-                        break;
-                    case 4:
-                        RejectMerchant();
-                        break;
-                    case 5:
-                        break;
-                    case 6:
-                        break;
-                    case 7:
-                        break;
-                    case 8:
-                        break;
-                    case 9:
-                        break;
-                    default:
-                        break;
-                }
+                }while(choice1 != 10);
             }
         }
 
@@ -103,6 +120,56 @@ namespace PassTask13
                 if (loginChoice == 1)
                 {
                     // Handle merchant login...
+                    Merchant loggedInMerchant = MerchantLogin();
+                    if(loggedInMerchant != null)
+                    {
+                        int choice1 = 0;
+                        do
+                        {
+                            Console.WriteLine($"Logged in as {loggedInMerchant.username}");
+                            Console.WriteLine("1. Add Product");
+                            Console.WriteLine("2. Edit Product");
+                            Console.WriteLine("3. Delete Product");
+                            Console.WriteLine("4. Manage Order");
+                            Console.WriteLine("5. View Products");
+                            Console.WriteLine("6. View Invoices");
+                            Console.WriteLine("7. Logout");
+                            if(!int.TryParse(Console.ReadLine(), out choice1))
+                            {
+                                Console.WriteLine("Invalid Input. Please enter a number");
+                                continue; // Go back to the start of the loop
+                            }
+
+                            switch (choice1)
+                            {
+                                case 1:
+                                    loggedInMerchant.AddProduct();
+                                    break;
+                                case 2:
+                                    loggedInMerchant.EditProduct();
+                                    break;
+                                case 3:
+                                    loggedInMerchant.DeleteProduct();
+                                    break;
+                                case 4:
+                                    loggedInMerchant.ManageOrder();
+                                    break;
+                                case 5:
+                                    loggedInMerchant.ViewProducts();
+                                    break;
+                                case 6:
+                                    loggedInMerchant.ViewInvoices();
+                                    break;
+                                case 7:
+                                    Console.WriteLine("Logged out successfully!");
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid choice. Please select a valid option.");
+                                    break;
+                            }
+
+                        } while (choice1 != 7); // Keep looping until user chooses to logout
+                    }
                 }
                 else
                 {
@@ -124,6 +191,56 @@ namespace PassTask13
                 if (loginChoice == 1)
                 {
                     // Handle customer login...
+                    Customer loggedInCustomer = CustomerLogin();
+                    if(loggedInCustomer != null)
+                    {
+                        int choice1 = 0;
+                        do
+                        {
+                            Console.WriteLine($"Logged in as {loggedInCustomer.username}");
+                            Console.WriteLine("1. Subscribe to Merchant");
+                            Console.WriteLine("2. Unsubscribe to Merchant");
+                            Console.WriteLine("3. Browse Products");
+                            Console.WriteLine("4. Order Product");
+                            Console.WriteLine("5. Rate Product");
+                            Console.WriteLine("6. View Invoices");
+                            Console.WriteLine("7. Logout");
+                            if(!int.TryParse(Console.ReadLine(), out choice1))
+                            {
+                                Console.WriteLine("Invalid Input. Please enter a number");
+                                continue; // Go back to the start of the loop
+                            }
+
+                            switch(choice1)
+                            {
+                                case 1:
+                                    loggedInCustomer.Subscribe();
+                                    break;
+                                case 2:
+                                    loggedInCustomer.Unsubscribe();
+                                    break;
+                                case 3:
+                                    loggedInCustomer.BrowseProducts();
+                                    break;
+                                case 4:
+                                    loggedInCustomer.OrderProduct();
+                                    break;
+                                case 5:
+                                    loggedInCustomer.RateProduct();
+                                    break;
+                                case 6:
+                                    loggedInCustomer.ViewInvoices();
+                                    break;
+                                case 7:
+                                    Console.WriteLine("Logged out successfully!");
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid choice. Please select a valid option.");
+                                    break;
+                            }
+
+                        } while(choice1 != 7); // Keep looping until user chooses to logout
+                    }
                 }
                 else
                 {
@@ -353,6 +470,73 @@ namespace PassTask13
             Console.WriteLine($"Customer {selectedCustomer.username} rejected successfully!");
         }
 
+        public static Customer CustomerLogin()
+        {
+            Console.WriteLine("Enter your username:");
+            string inputUsername = Console.ReadLine();
+
+            Console.WriteLine("Enter your password:");
+            string inputPassword = Console.ReadLine();
+
+            foreach (var customer in Admin.Customers)
+            {
+                if (customer.username == inputUsername && customer.password == inputPassword)
+                {
+                    Console.WriteLine($"Welcome back, {inputUsername}!");
+                    return customer;
+                }
+            }
+
+            Console.WriteLine("Invalid username or password.");
+            return null;
+        }
+
+        public static Merchant MerchantLogin()
+        {
+            Console.WriteLine("Enter your username:");
+            string inputUsername = Console.ReadLine();
+
+            Console.WriteLine("Enter your password:");
+            string inputPassword = Console.ReadLine();
+
+            foreach (var merchant in Admin.Merchants)
+            {
+                if (merchant.username == inputUsername && merchant.password == inputPassword)
+                {
+                    Console.WriteLine($"Welcome back, {inputUsername}!");
+                    return merchant;
+                }
+            }
+
+            Console.WriteLine("Invalid username or password.");
+            return null;
+        }
+
+        public static Product SelectProductFromRegisteredProducts()
+        {
+            if (Data.RegisteredProducts.Count == 0)
+            {
+                Console.WriteLine("No registered products.");
+                return null;
+            }
+
+            Console.WriteLine("Select a product to approve:");
+            for (int i = 0; i < Data.RegisteredProducts.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Data.RegisteredProducts[i].Name}");
+            }
+
+            int productChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out productChoice) || productChoice < 1 || productChoice > Data.RegisteredProducts.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid product.");
+                }
+            } while (productChoice < 1 || productChoice > Data.RegisteredProducts.Count);
+
+            return Data.RegisteredProducts[productChoice - 1];
+        }
 
         public static bool EmailExists(string email)
         {
