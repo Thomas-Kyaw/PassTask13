@@ -100,6 +100,9 @@ namespace PassTask13
                         case 8:
                             loggedInAdmin.GetInvoice();
                             break;
+                        case 9:
+                            loggedInAdmin.ViewCustomerProfile();
+                            break;
                         case 10:
                             Console.WriteLine("Logged out successfully!");
                             break;
@@ -113,73 +116,65 @@ namespace PassTask13
 
         public static void HandleMerchantFlow()
         {
-            int loginChoice;
-            do
+            Merchant loggedInMerchant = MerchantLogin();
+            if (loggedInMerchant != null)
             {
-                loginChoice = GetLoginChoice();
-                if (loginChoice == 1)
+                int choice1 = 0;
+                do
                 {
-                    // Handle merchant login...
-                    Merchant loggedInMerchant = MerchantLogin();
-                    if(loggedInMerchant != null)
+                    Console.WriteLine($"Logged in as {loggedInMerchant.username}");
+                    Console.WriteLine("1. Add Product");
+                    Console.WriteLine("2. Edit Product");
+                    Console.WriteLine("3. Delete Product");
+                    Console.WriteLine("4. Manage Order");
+                    Console.WriteLine("5. View Products");
+                    Console.WriteLine("6. View Invoices");
+                    Console.WriteLine("7. Logout");
+                    if (!int.TryParse(Console.ReadLine(), out choice1))
                     {
-                        int choice1 = 0;
-                        do
-                        {
-                            Console.WriteLine($"Logged in as {loggedInMerchant.username}");
-                            Console.WriteLine("1. Add Product");
-                            Console.WriteLine("2. Edit Product");
-                            Console.WriteLine("3. Delete Product");
-                            Console.WriteLine("4. Manage Order");
-                            Console.WriteLine("5. View Products");
-                            Console.WriteLine("6. View Invoices");
-                            Console.WriteLine("7. Logout");
-                            if(!int.TryParse(Console.ReadLine(), out choice1))
-                            {
-                                Console.WriteLine("Invalid Input. Please enter a number");
-                                continue; // Go back to the start of the loop
-                            }
-
-                            switch (choice1)
-                            {
-                                case 1:
-                                    loggedInMerchant.AddProduct();
-                                    break;
-                                case 2:
-                                    loggedInMerchant.EditProduct();
-                                    break;
-                                case 3:
-                                    loggedInMerchant.DeleteProduct();
-                                    break;
-                                case 4:
-                                    loggedInMerchant.ManageOrder();
-                                    break;
-                                case 5:
-                                    loggedInMerchant.ViewProducts();
-                                    break;
-                                case 6:
-                                    loggedInMerchant.ViewInvoices();
-                                    break;
-                                case 7:
-                                    Console.WriteLine("Logged out successfully!");
-                                    break;
-                                default:
-                                    Console.WriteLine("Invalid choice. Please select a valid option.");
-                                    break;
-                            }
-
-                        } while (choice1 != 7); // Keep looping until user chooses to logout
+                        Console.WriteLine("Invalid Input. Please enter a number.");
+                        continue; // Go back to the start of the loop
                     }
-                }
-                else
+
+                    switch (choice1)
+                    {
+                        case 1:
+                            loggedInMerchant.AddProduct();
+                            break;
+                        case 2:
+                            loggedInMerchant.EditProduct();
+                            break;
+                        case 3:
+                            loggedInMerchant.DeleteProduct();
+                            break;
+                        case 4:
+                            loggedInMerchant.ManageOrder();
+                            break;
+                        case 5:
+                            loggedInMerchant.ViewProducts();
+                            break;
+                        case 6:
+                            loggedInMerchant.ViewInvoices();
+                            break;
+                        case 7:
+                            Console.WriteLine("Logged out successfully!");
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please select a valid option.");
+                            break;
+                    }
+
+                } while (choice1 != 7); // Keep looping until user chooses to logout
+            }
+            else
+            {
+                Console.WriteLine("Do you want to login or register again? (yes/no)");
+                string response = Console.ReadLine().ToLower();
+                if (response == "yes")
                 {
-                    RegisterMerchant();
-                    Console.WriteLine("Do you want to login or register again? (yes/no)");
-                    string response = Console.ReadLine().ToLower();
-                    if (response != "yes")
-                        break; // exit the loop
+                    HandleMerchantFlow(); // Recursive call to handle re-login or re-registration
                 }
-            } while (true); // Keep looping until user chooses not to
+            }
         }
 
         public static void HandleCustomerFlow()
@@ -315,9 +310,37 @@ namespace PassTask13
             Merchant newMerchant = RegisterUser<Merchant>();
             newMerchant.RegistrationStatus = MerchantStatus.PENDING;
 
+            // Prompt the user to set the merchant category
+            Console.WriteLine("Please enter what category of merchant you are.");
+            Console.WriteLine("(If your category is invalid, all your product category will be set to Miscellaneous)");
+            DisplayMerchantCategories();
+
+            int categoryChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out categoryChoice) || categoryChoice < 1 || categoryChoice > Enum.GetValues(typeof(MerchantCategory)).Length)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid merchant category.");
+                    DisplayMerchantCategories();
+                }
+            } while (categoryChoice < 1 || categoryChoice > Enum.GetValues(typeof(MerchantCategory)).Length);
+
+            newMerchant.MerchantCategory = (MerchantCategory)(categoryChoice - 1); // Set the chosen category
+
             Data.RegisteredMerchants.Add(newMerchant);
 
             Console.WriteLine("Merchant registration successful!");
+        }
+
+        private static void DisplayMerchantCategories()
+        {
+            Console.WriteLine("Available Merchant Categories:");
+            int index = 1;
+            foreach (MerchantCategory category in Enum.GetValues(typeof(MerchantCategory)))
+            {
+                Console.WriteLine($"{index}. {category}");
+                index++;
+            }
         }
 
         public static void RegisterCustomer()

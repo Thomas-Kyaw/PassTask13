@@ -22,6 +22,7 @@ namespace PassTask13
         public MerchantCategory MerchantCategory
         {
             get{return merchantCategory;}
+            set{merchantCategory = value;}
         }
 
         public MerchantStatus RegistrationStatus
