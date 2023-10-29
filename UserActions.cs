@@ -208,9 +208,10 @@ namespace PassTask13
                             Console.WriteLine("2. Unsubscribe to Merchant");
                             Console.WriteLine("3. Browse Products");
                             Console.WriteLine("4. Order Product");
-                            Console.WriteLine("5. Rate Product");
-                            Console.WriteLine("6. View Invoices");
-                            Console.WriteLine("7. Logout");
+                            Console.WriteLine("5. Cancel Order");
+                            Console.WriteLine("6. Rate Product");
+                            Console.WriteLine("7. View Invoices");
+                            Console.WriteLine("8. Logout");
                             if (!int.TryParse(Console.ReadLine(), out choice1))
                             {
                                 Console.WriteLine("Invalid Input. Please enter a number");
@@ -232,12 +233,15 @@ namespace PassTask13
                                     loggedInCustomer.OrderProduct();
                                     break;
                                 case 5:
-                                    loggedInCustomer.RateProduct();
+                                    loggedInCustomer.CancelOrder();
                                     break;
                                 case 6:
-                                    loggedInCustomer.ViewInvoices();
+                                    loggedInCustomer.RateProduct();
                                     break;
                                 case 7:
+                                    loggedInCustomer.ViewInvoices();
+                                    break;
+                                case 8:
                                     Console.WriteLine("Logged out successfully!");
                                     break;
                                 default:
@@ -245,7 +249,7 @@ namespace PassTask13
                                     break;
                             }
 
-                        } while (choice1 != 7); // Keep looping until user chooses to logout
+                        } while (choice1 != 8); // Keep looping until user chooses to logout
                     }
                     else
                     {

@@ -224,6 +224,40 @@ namespace PassTask13
             return newOrder;
         }
 
+        public void CancelOrder()
+        {
+            if (orders.Count == 0)
+            {
+                Console.WriteLine("You have no orders to cancel.");
+                return;
+            }
+
+            Console.WriteLine("Select an order to cancel:");
+            for (int i = 0; i < orders.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. Order ID: {orders[i].Id}, Product: {orders[i].Product.Name}, Status: {orders[i].Status}");
+            }
+
+            int orderChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out orderChoice) || orderChoice < 1 || orderChoice > orders.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid order.");
+                }
+            } while (orderChoice < 1 || orderChoice > orders.Count);
+
+           Order selectedOrder = orders[orderChoice - 1];
+            selectedOrder.Status = OrderStatus.CANCELLED;
+
+            // Remove the order from the merchant's list of orders
+            Merchant merchant = selectedOrder.Product.Merchant;
+            merchant.Orders.Remove(selectedOrder);
+
+            orders.Remove(selectedOrder);
+            Data.CancelledOrders.Add(selectedOrder);
+            Console.WriteLine($"Order {selectedOrder.Id} has been cancelled.");
+        }
 
         public void RateProduct()
         {
