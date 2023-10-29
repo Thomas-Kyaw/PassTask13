@@ -7,10 +7,15 @@ namespace PassTask13
     {
         public static void Main()
         {
+            MainFlow();
+        }
+
+        public static void MainFlow()
+        {
             while (true)
             {
                 int userTypeChoice = UserActions.GetUserTypeChoice();
-                
+
                 switch (userTypeChoice)
                 {
                     case UserActions.ADMIN_CHOICE:
@@ -26,9 +31,8 @@ namespace PassTask13
 
                 Console.WriteLine("Do you want to continue? (yes/no)");
                 if (Console.ReadLine().ToLower() != "yes")
-                    break; // Exit the while loop and end the program
+                    break; // Exit the while loop and return to main menu
             }
         }
-
     }
 }
