@@ -24,9 +24,10 @@ namespace PassTask13
 
         public void CheckProductsByMerchant()
         {
-            if(merchants.Count < 1)
+            if (merchants.Count < 1)
             {
                 Console.WriteLine("No merchants registered");
+                return; // Exit the method if there are no merchants
             }
 
             Console.WriteLine("Select a merchant to check their products:");
@@ -35,6 +36,7 @@ namespace PassTask13
             {
                 Console.WriteLine($"{i + 1}. {merchants[i].username}");
             }
+
             int merchantChoice;
             do
             {
@@ -46,14 +48,19 @@ namespace PassTask13
 
             Merchant selectedMerchant = merchants[merchantChoice - 1];
 
-            List<Product> output = new List<Product>();
-            foreach(Product product in selectedMerchant.Products)
+            if (selectedMerchant.Products.Count == 0)
             {
-                output.Add(product);
+                Console.WriteLine("This merchant has no products.");
+                return; // Exit the method if the merchant has no products
             }
 
-            //return output;
+            Console.WriteLine($"Products of {selectedMerchant.username}:");
+            foreach (Product product in selectedMerchant.Products)
+            {
+                Console.WriteLine($"- {product.Name}, Category: {product.Category}, Price: {product.Price}");
+            }
         }
+
         public void ApproveProduct(Product chosenProduct)
         {
             chosenProduct.Status = ProductStatus.APPROVED;

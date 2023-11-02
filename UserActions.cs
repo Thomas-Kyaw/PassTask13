@@ -114,7 +114,7 @@ namespace PassTask13
             }
         }
 
-        public static void HandleMerchantFlow()
+        public static bool HandleMerchantFlow()
         {
             int loginChoice;
             do
@@ -164,7 +164,7 @@ namespace PassTask13
                                     break;
                                 case 7:
                                     Console.WriteLine("Logged out successfully!");
-                                    break;
+                                    return true; // User logged out
                                 default:
                                     Console.WriteLine("Invalid choice. Please select a valid option.");
                                     break;
@@ -186,10 +186,12 @@ namespace PassTask13
                         break; // exit the loop
                 }
             } while (true); // Keep looping until user chooses not to
+
+            return false; // User did not log out
         }
 
         
-        public static void HandleCustomerFlow()
+        public static bool HandleCustomerFlow()
         {
             int loginChoice;
             do
@@ -243,7 +245,7 @@ namespace PassTask13
                                     break;
                                 case 8:
                                     Console.WriteLine("Logged out successfully!");
-                                    break;
+                                    return true; // User logged out
                                 default:
                                     Console.WriteLine("Invalid choice. Please select a valid option.");
                                     break;
@@ -265,7 +267,10 @@ namespace PassTask13
                         break; // exit the loop
                 }
             } while (true); // Keep looping until user chooses not to
+
+            return false; // User did not log out
         }
+
 
 
         public static Admin AdminLogin()

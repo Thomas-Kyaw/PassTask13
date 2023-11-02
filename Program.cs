@@ -22,17 +22,24 @@ namespace PassTask13
                         UserActions.HandleAdminFlow();
                         break;
                     case UserActions.MERCHANT_CHOICE:
-                        UserActions.HandleMerchantFlow();
+                        if (UserActions.HandleMerchantFlow())
+                        {
+                            continue; // User logged out, show main menu again
+                        }
                         break;
                     case UserActions.CUSTOMER_CHOICE:
-                        UserActions.HandleCustomerFlow();
+                        if (UserActions.HandleCustomerFlow())
+                        {
+                            continue; // User logged out, show main menu again
+                        }
                         break;
                 }
 
                 Console.WriteLine("Do you want to continue? (yes/no)");
                 if (Console.ReadLine().ToLower() != "yes")
-                    break; // Exit the while loop and return to main menu
+                    break; // Exit the while loop and end the program
             }
         }
+
     }
 }

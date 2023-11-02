@@ -297,8 +297,6 @@ namespace PassTask13
                 }
             } while (rating < 1 || rating > 5);
         }
-
-        // Inside Customer.cs
         public void ViewInvoices()
         {
             var customerInvoices = Data.AllInvoices.Where(invoice => invoice.Customer == this).ToList();

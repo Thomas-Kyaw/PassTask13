@@ -23,7 +23,7 @@ namespace PassTask13
         }
         public Customer Customer
         {
-            get{return Customer;}
+            get{return customer;}
         }
         public int Id
         {
