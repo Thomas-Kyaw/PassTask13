@@ -1,0 +1,14 @@
+/Users/aungkhantkyaw/Documents/PassTask13/bin/Debug/net7.0/PassTask13
+/Users/aungkhantkyaw/Documents/PassTask13/bin/Debug/net7.0/PassTask13.deps.json
+/Users/aungkhantkyaw/Documents/PassTask13/bin/Debug/net7.0/PassTask13.runtimeconfig.json
+/Users/aungkhantkyaw/Documents/PassTask13/bin/Debug/net7.0/PassTask13.dll
+/Users/aungkhantkyaw/Documents/PassTask13/bin/Debug/net7.0/PassTask13.pdb
+/Users/aungkhantkyaw/Documents/PassTask13/obj/Debug/net7.0/PassTask13.GeneratedMSBuildEditorConfig.editorconfig
+/Users/aungkhantkyaw/Documents/PassTask13/obj/Debug/net7.0/PassTask13.AssemblyInfoInputs.cache
+/Users/aungkhantkyaw/Documents/PassTask13/obj/Debug/net7.0/PassTask13.AssemblyInfo.cs
+/Users/aungkhantkyaw/Documents/PassTask13/obj/Debug/net7.0/PassTask13.csproj.CoreCompileInputs.cache
+/Users/aungkhantkyaw/Documents/PassTask13/obj/Debug/net7.0/PassTask13.dll
+/Users/aungkhantkyaw/Documents/PassTask13/obj/Debug/net7.0/refint/PassTask13.dll
+/Users/aungkhantkyaw/Documents/PassTask13/obj/Debug/net7.0/PassTask13.pdb
+/Users/aungkhantkyaw/Documents/PassTask13/obj/Debug/net7.0/PassTask13.genruntimeconfig.cache
+/Users/aungkhantkyaw/Documents/PassTask13/obj/Debug/net7.0/ref/PassTask13.dll
