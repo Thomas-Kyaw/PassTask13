@@ -1,1 +1,0 @@
-/Users/aungkhantkyaw/.splashkit/dotnet/SplashKit.cs
