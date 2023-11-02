@@ -232,5 +232,199 @@ namespace PassTask13
             }
         }
 
+        public void ViewMerchantProfile()
+        {
+            if (merchants.Count < 1)
+            {
+                Console.WriteLine("No registered Merchants");
+                return;
+            }
+
+            Console.WriteLine("Choose the merchant");
+            for (int i = 0; i < merchants.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {merchants[i].username}");
+            }
+
+            int merchantChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out merchantChoice) || merchantChoice < 1 || merchantChoice > merchants.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid merchant.");
+                }
+            } while (merchantChoice < 1 || merchantChoice > merchants.Count);
+
+            Merchant selectedMerchant = merchants[merchantChoice - 1];
+            Console.WriteLine("Displaying selected merchant details");
+            Console.WriteLine($"Name - {selectedMerchant.username}");
+            Console.WriteLine($"Email - {selectedMerchant.email}");
+            Console.WriteLine($"Subscribers: {selectedMerchant.Subscribers.Count}");
+
+            if (selectedMerchant.Products.Count > 0)
+            {
+                Console.WriteLine("Products offered by the merchant:");
+                foreach (Product product in selectedMerchant.Products)
+                {
+                    Console.WriteLine($"Product Name: {product.Name}, Category: {product.Category}, Price: {product.Price}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("The merchant has no products.");
+            }
+
+            if (selectedMerchant.Orders.Count > 0)
+            {
+                Console.WriteLine("Orders received by the merchant:");
+                foreach (Order order in selectedMerchant.Orders)
+                {
+                    Console.WriteLine($"Order ID: {order.Id}, Product: {order.Product.Name}, Customer: {order.Customer.username}, Status: {order.Status}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("The merchant has not received any orders.");
+            }
+        }
+
+        public void ApproveMerchant()
+        {
+            if (Data.RegisteredMerchants.Count == 0)
+            {
+                Console.WriteLine("No merchants available for approval.");
+                return;
+            }
+
+            Console.WriteLine("Select a merchant to approve:");
+
+            for (int i = 0; i < Data.RegisteredMerchants.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Data.RegisteredMerchants[i].username}");
+            }
+
+            int merchantChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out merchantChoice) || merchantChoice < 1 || merchantChoice > Data.RegisteredMerchants.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid merchant.");
+                }
+            } while (merchantChoice < 1 || merchantChoice > Data.RegisteredMerchants.Count);
+
+            Merchant selectedMerchant = Data.RegisteredMerchants[merchantChoice - 1];
+            selectedMerchant.RegistrationStatus = MerchantStatus.APPROVED;
+
+            // Move the merchant from RegisteredMerchants list to the admin's Merchants list
+            Admin.Merchants.Add(selectedMerchant);
+            Data.RegisteredMerchants.RemoveAt(merchantChoice - 1);
+
+            Console.WriteLine($"Merchant {selectedMerchant.username} approved successfully!");
+        }
+
+        public void RejectMerchant()
+        {
+            if (Data.RegisteredMerchants.Count == 0)
+            {
+                Console.WriteLine("No merchants available for rejection.");
+                return;
+            }
+
+            Console.WriteLine("Select a merchant to reject:");
+
+            for (int i = 0; i < Data.RegisteredMerchants.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Data.RegisteredMerchants[i].username}");
+            }
+
+            int merchantChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out merchantChoice) || merchantChoice < 1 || merchantChoice > Data.RegisteredMerchants.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid merchant.");
+                }
+            } while (merchantChoice < 1 || merchantChoice > Data.RegisteredMerchants.Count);
+
+            Merchant selectedMerchant = Data.RegisteredMerchants[merchantChoice - 1];
+            selectedMerchant.RegistrationStatus = MerchantStatus.REJECTED;
+
+            Data.RejectedMerchants.Add(selectedMerchant);
+            Data.RegisteredMerchants.RemoveAt(merchantChoice - 1);
+
+            Console.WriteLine($"Merchant {selectedMerchant.username} rejected successfully!");
+        }
+
+        public void ApproveCustomer()
+        {
+            if (Data.RegisteredCustomers.Count == 0)
+            {
+                Console.WriteLine("No customers available for approval.");
+                return;
+            }
+
+            Console.WriteLine("Select a customer to approve:");
+
+            for (int i = 0; i < Data.RegisteredCustomers.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Data.RegisteredCustomers[i].username}");
+            }
+
+            int customerChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out customerChoice)
+                    || customerChoice < 1 
+                    || customerChoice > Data.RegisteredCustomers.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid customer.");
+                }
+            } while (customerChoice < 1 || customerChoice > Data.RegisteredCustomers.Count);
+
+            Customer selectedCustomer = Data.RegisteredCustomers[customerChoice - 1];
+            selectedCustomer.CustomerStatus = CustomerStatus.APPROVED;
+
+            Admin.Customers.Add(selectedCustomer);
+            Data.RegisteredCustomers.RemoveAt(customerChoice - 1);
+
+
+            Console.WriteLine($"Customer {selectedCustomer.username} approved successfully!");
+        }
+
+        public void RejectCustomer()
+        {
+            if (Data.RegisteredCustomers.Count == 0)
+            {
+                Console.WriteLine("No customers available for rejection.");
+                return;
+            }
+
+            Console.WriteLine("Select a customer to reject:");
+
+            for (int i = 0; i < Data.RegisteredCustomers.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {Data.RegisteredCustomers[i].username}");
+            }
+
+            int customerChoice;
+            do
+            {
+                if (!int.TryParse(Console.ReadLine(), out customerChoice)
+                    || customerChoice < 1 
+                    || customerChoice > Data.RegisteredCustomers.Count)
+                {
+                    Console.WriteLine("Invalid choice. Please select a valid customer.");
+                }
+            } while (customerChoice < 1 || customerChoice > Data.RegisteredCustomers.Count);
+
+            Customer selectedCustomer = Data.RegisteredCustomers[customerChoice - 1];
+            selectedCustomer.CustomerStatus = CustomerStatus.REJECTED;
+
+            Data.RejectedCustomers.Add(selectedCustomer);
+            Data.RegisteredCustomers.RemoveAt(customerChoice - 1);
+
+            Console.WriteLine($"Customer {selectedCustomer.username} rejected successfully!");
+        }
+
     }   
 }

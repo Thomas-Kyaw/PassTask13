@@ -12,7 +12,10 @@ namespace PassTask13
         public Customer() { }
 
         public Customer(string Username, string Email, string Password) 
-            : base(Username, Email, Password) { }
+            : base(Username, Email, Password) 
+            { 
+                coupons = 10;
+            }
         
         public CustomerStatus CustomerStatus
         {

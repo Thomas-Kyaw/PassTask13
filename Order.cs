@@ -10,7 +10,6 @@ namespace PassTask13
         private Product product;
         private PaymentType paymentType;
         private OrderStatus status;
-        private Invoice invoice;
         public Order(Customer customer, Product product, PaymentType paymentType)
         {
             this.id = Data.NextOrderId++;

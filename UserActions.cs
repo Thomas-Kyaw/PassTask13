@@ -59,7 +59,8 @@ namespace PassTask13
                         Console.WriteLine("7. Reject Product");
                         Console.WriteLine("8. Get Invoice");
                         Console.WriteLine("9. View Customer Profile");
-                        Console.WriteLine("10. Logout");
+                        Console.WriteLine("10. View Merchantt Profile");
+                        Console.WriteLine("11. Logout");
                         if (!int.TryParse(Console.ReadLine(), out choice1))
                         {
                             Console.WriteLine("Invalid input. Please enter a number.");
@@ -69,16 +70,16 @@ namespace PassTask13
                     switch (choice1)
                     {
                         case 1:
-                            ApproveCustomer();
+                            loggedInAdmin.ApproveCustomer();
                             break;
                         case 2:
-                            RejectCustomer();
+                            loggedInAdmin.RejectCustomer();
                             break;
                         case 3:
-                            ApproveMerchant(); 
+                            loggedInAdmin.ApproveMerchant(); 
                             break;
                         case 4:
-                            RejectMerchant();
+                            loggedInAdmin.RejectMerchant();
                             break;
                         case 5:
                             loggedInAdmin.CheckProductsByMerchant();                        
@@ -104,13 +105,16 @@ namespace PassTask13
                             loggedInAdmin.ViewCustomerProfile();
                             break;
                         case 10:
+                            loggedInAdmin.ViewMerchantProfile();
+                            break;
+                        case 11:
                             Console.WriteLine("Logged out successfully!");
                             break;
                         default:
                             Console.WriteLine("Invalid choice. Please select a valid option.");
                             break;   
                     }
-                }while(choice1 != 10);
+                }while(choice1 != 11);
             }
         }
 
@@ -376,146 +380,6 @@ namespace PassTask13
             Data.RegisteredCustomers.Add(newCustomer);
 
             Console.WriteLine("Customer registration successful!");
-        }
-
-        // Other methods to be added
-
-        public static void ApproveMerchant()
-        {
-            if (Data.RegisteredMerchants.Count == 0)
-            {
-                Console.WriteLine("No merchants available for approval.");
-                return;
-            }
-
-            Console.WriteLine("Select a merchant to approve:");
-
-            for (int i = 0; i < Data.RegisteredMerchants.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {Data.RegisteredMerchants[i].username}");
-            }
-
-            int merchantChoice;
-            do
-            {
-                if (!int.TryParse(Console.ReadLine(), out merchantChoice) || merchantChoice < 1 || merchantChoice > Data.RegisteredMerchants.Count)
-                {
-                    Console.WriteLine("Invalid choice. Please select a valid merchant.");
-                }
-            } while (merchantChoice < 1 || merchantChoice > Data.RegisteredMerchants.Count);
-
-            Merchant selectedMerchant = Data.RegisteredMerchants[merchantChoice - 1];
-            selectedMerchant.RegistrationStatus = MerchantStatus.APPROVED;
-
-            // Move the merchant from RegisteredMerchants list to the admin's Merchants list
-            Admin.Merchants.Add(selectedMerchant);
-            Data.RegisteredMerchants.RemoveAt(merchantChoice - 1);
-
-            Console.WriteLine($"Merchant {selectedMerchant.username} approved successfully!");
-        }
-
-        public static void RejectMerchant()
-        {
-            if (Data.RegisteredMerchants.Count == 0)
-            {
-                Console.WriteLine("No merchants available for rejection.");
-                return;
-            }
-
-            Console.WriteLine("Select a merchant to reject:");
-
-            for (int i = 0; i < Data.RegisteredMerchants.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {Data.RegisteredMerchants[i].username}");
-            }
-
-            int merchantChoice;
-            do
-            {
-                if (!int.TryParse(Console.ReadLine(), out merchantChoice) || merchantChoice < 1 || merchantChoice > Data.RegisteredMerchants.Count)
-                {
-                    Console.WriteLine("Invalid choice. Please select a valid merchant.");
-                }
-            } while (merchantChoice < 1 || merchantChoice > Data.RegisteredMerchants.Count);
-
-            Merchant selectedMerchant = Data.RegisteredMerchants[merchantChoice - 1];
-            selectedMerchant.RegistrationStatus = MerchantStatus.REJECTED;
-
-            Data.RejectedMerchants.Add(selectedMerchant);
-            Data.RegisteredMerchants.RemoveAt(merchantChoice - 1);
-
-            Console.WriteLine($"Merchant {selectedMerchant.username} rejected successfully!");
-        }
-
-        public static void ApproveCustomer()
-        {
-            if (Data.RegisteredCustomers.Count == 0)
-            {
-                Console.WriteLine("No customers available for approval.");
-                return;
-            }
-
-            Console.WriteLine("Select a customer to approve:");
-
-            for (int i = 0; i < Data.RegisteredCustomers.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {Data.RegisteredCustomers[i].username}");
-            }
-
-            int customerChoice;
-            do
-            {
-                if (!int.TryParse(Console.ReadLine(), out customerChoice)
-                    || customerChoice < 1 
-                    || customerChoice > Data.RegisteredCustomers.Count)
-                {
-                    Console.WriteLine("Invalid choice. Please select a valid customer.");
-                }
-            } while (customerChoice < 1 || customerChoice > Data.RegisteredCustomers.Count);
-
-            Customer selectedCustomer = Data.RegisteredCustomers[customerChoice - 1];
-            selectedCustomer.CustomerStatus = CustomerStatus.APPROVED;
-
-            Admin.Customers.Add(selectedCustomer);
-            Data.RegisteredCustomers.RemoveAt(customerChoice - 1);
-
-
-            Console.WriteLine($"Customer {selectedCustomer.username} approved successfully!");
-        }
-
-        public static void RejectCustomer()
-        {
-            if (Data.RegisteredCustomers.Count == 0)
-            {
-                Console.WriteLine("No customers available for rejection.");
-                return;
-            }
-
-            Console.WriteLine("Select a customer to reject:");
-
-            for (int i = 0; i < Data.RegisteredCustomers.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {Data.RegisteredCustomers[i].username}");
-            }
-
-            int customerChoice;
-            do
-            {
-                if (!int.TryParse(Console.ReadLine(), out customerChoice)
-                    || customerChoice < 1 
-                    || customerChoice > Data.RegisteredCustomers.Count)
-                {
-                    Console.WriteLine("Invalid choice. Please select a valid customer.");
-                }
-            } while (customerChoice < 1 || customerChoice > Data.RegisteredCustomers.Count);
-
-            Customer selectedCustomer = Data.RegisteredCustomers[customerChoice - 1];
-            selectedCustomer.CustomerStatus = CustomerStatus.REJECTED;
-
-            Data.RejectedCustomers.Add(selectedCustomer);
-            Data.RegisteredCustomers.RemoveAt(customerChoice - 1);
-
-            Console.WriteLine($"Customer {selectedCustomer.username} rejected successfully!");
         }
 
         public static Customer CustomerLogin()

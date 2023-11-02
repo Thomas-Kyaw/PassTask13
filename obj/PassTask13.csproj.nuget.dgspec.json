@@ -38,6 +38,24 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[15.5.0, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.9.0, )"
+            },
+            "NUnit.Console": {
+              "target": "Package",
+              "version": "[3.11.1, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[3.9.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
