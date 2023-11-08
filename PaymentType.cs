@@ -6,6 +6,8 @@ namespace PassTask13
     public enum PaymentType
     {
         CASH,
-        COUPON
+        COUPON,
+
+        CREDIT
     }
 }

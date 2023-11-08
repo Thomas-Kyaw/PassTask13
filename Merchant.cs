@@ -12,7 +12,7 @@ namespace PassTask13
         private List<Customer> subscribers = new List<Customer>();
         private MerchantStatus registrationStatus;
 
-        public Merchant() { }  // Parameterless constructor
+        public Merchant() { }  
         public Merchant(string Username, string Email, string Password) 
             : base(Username, Email, Password) 
             {

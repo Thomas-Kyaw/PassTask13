@@ -170,12 +170,12 @@ namespace PassTask13
             }
         }
 
-        public Order OrderProduct()
+        public void OrderProduct()
         {
             if (subscribedMerchants.Count == 0)
             {
                 Console.WriteLine("You are not subscribed to any merchants.");
-                return null;
+                return;
             }
 
             Console.WriteLine("Select a merchant from your subscribed list:");
@@ -188,7 +188,7 @@ namespace PassTask13
             if (!int.TryParse(Console.ReadLine(), out merchantChoice) || merchantChoice < 1 || merchantChoice > subscribedMerchants.Count)
             {
                 Console.WriteLine("Invalid merchant choice.");
-                return null;
+                return;
             }
 
             Merchant selectedMerchant = subscribedMerchants[merchantChoice - 1];
@@ -204,27 +204,41 @@ namespace PassTask13
             if (!int.TryParse(Console.ReadLine(), out productChoice) || productChoice < 1 || productChoice > products.Count)
             {
                 Console.WriteLine("Invalid product choice.");
-                return null;
+                return;
             }
 
             Product selectedProduct = products[productChoice - 1];
 
-            Console.WriteLine("Enter payment type (1. Credit, 2. Debit, 3. Cash):");
+            Console.WriteLine("Enter payment type (1. Cash, 2. Coupon, 3. Credit):");
             int paymentChoice;
             if (!int.TryParse(Console.ReadLine(), out paymentChoice) || paymentChoice < 1 || paymentChoice > 3)
             {
                 Console.WriteLine("Invalid payment type choice.");
-                return null;
+                return;
             }
 
             PaymentType selectedPaymentType = (PaymentType)paymentChoice;
+
+            // Check if the payment type is COUPON and if the customer has coupons available
+            if (selectedPaymentType == PaymentType.COUPON)
+            {
+                if (coupons > 0)
+                {
+                    Console.WriteLine("Your coupon was redeemed successfully");
+                    coupons--; // Decrement the coupon count by 1
+                }
+                else
+                {
+                    Console.WriteLine("You do not have enough coupons.");
+                    return;
+                }
+            }
 
             Order newOrder = new Order(this, selectedProduct, selectedPaymentType);
             orders.Add(newOrder);
             selectedMerchant.Orders.Add(newOrder);
 
             Console.WriteLine($"Ordered {selectedProduct.Name} using {selectedPaymentType}.");
-            return newOrder;
         }
 
         public void CancelOrder()
