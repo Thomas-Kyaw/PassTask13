@@ -58,7 +58,7 @@ namespace PassTask13
             float total = 0;
             foreach (Order order in this.customer.Orders) 
             {
-                if(order.Product.Merchant == this.merchant) // Check the merchant via the product
+                if(order.Product.Merchant == this.merchant && (order.Status == OrderStatus.APPROVED || order.Status == OrderStatus.SHIPPED || order.Status == OrderStatus.DELIVERED)) // Check the merchant via the product
                 {
                     total += order.Product.Price;
                 }

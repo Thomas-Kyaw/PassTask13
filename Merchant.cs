@@ -286,6 +286,8 @@ namespace PassTask13
                 case 2:
                     selectedOrder.Status = OrderStatus.REJECTED;
                     Console.WriteLine($"Order {selectedOrder.Id} has been declined.");
+                    Data.CancelledOrders.Add(selectedOrder);
+                    orders.Remove(selectedOrder);
                     break;
                 case 3:
                     selectedOrder.Status = OrderStatus.SHIPPED;

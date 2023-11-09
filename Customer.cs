@@ -8,7 +8,7 @@ namespace PassTask13
         /// <summary>
         /// coupons to use in making an order
         /// </summary>
-        private int coupons;
+        private int coupons = 10;
         /// <summary>
         /// Orders made by this customer
         /// </summary>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/aungkhantkyaw/Documents/PassTask13/PassTask13.csproj": {}
+    "/Users/aungkhantkyaw/Documents/passtask13_with_pictures_and_tests/PassTask13/PassTask13.csproj": {}
   },
   "projects": {
-    "/Users/aungkhantkyaw/Documents/PassTask13/PassTask13.csproj": {
+    "/Users/aungkhantkyaw/Documents/passtask13_with_pictures_and_tests/PassTask13/PassTask13.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/aungkhantkyaw/Documents/PassTask13/PassTask13.csproj",
+        "projectUniqueName": "/Users/aungkhantkyaw/Documents/passtask13_with_pictures_and_tests/PassTask13/PassTask13.csproj",
         "projectName": "PassTask13",
-        "projectPath": "/Users/aungkhantkyaw/Documents/PassTask13/PassTask13.csproj",
+        "projectPath": "/Users/aungkhantkyaw/Documents/passtask13_with_pictures_and_tests/PassTask13/PassTask13.csproj",
         "packagesPath": "/Users/aungkhantkyaw/.nuget/packages/",
-        "outputPath": "/Users/aungkhantkyaw/Documents/PassTask13/obj/",
+        "outputPath": "/Users/aungkhantkyaw/Documents/passtask13_with_pictures_and_tests/PassTask13/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/aungkhantkyaw/.nuget/NuGet/NuGet.Config"
