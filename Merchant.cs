@@ -6,53 +6,85 @@ namespace PassTask13
 {
     public class Merchant:User
     {
+        /// <summary>
+        /// Category of the merchant
+        /// </summary>
         private MerchantCategory merchantCategory;
+        /// <summary>
+        /// Products listed by the merchant
+        /// </summary>
         private List<Product> products = new List<Product>();
+        /// <summary>
+        /// Orders recieved by the merchant
+        /// </summary>
         private List<Order> orders = new List<Order>();
+        /// <summary>
+        /// Customers who have subscribed to the merchant
+        /// </summary>
         private List<Customer> subscribers = new List<Customer>();
+        /// <summary>
+        /// status of the newly register merchant
+        /// </summary>
         private MerchantStatus registrationStatus;
-
+        /// <summary>
+        /// constructor of merchant, the category field is set the OTHERS(MISC) by default
+        /// </summary>
         public Merchant() { }  
         public Merchant(string Username, string Email, string Password) 
             : base(Username, Email, Password) 
             {
                 merchantCategory = MerchantCategory.OTHERS;
             }
-        
+        /// <summary>
+        /// property for merchant category field
+        /// </summary>
         public MerchantCategory MerchantCategory
         {
             get{return merchantCategory;}
             set{merchantCategory = value;}
         }
-
+        /// <summary>
+        /// property for merchant status field
+        /// </summary>
         public MerchantStatus RegistrationStatus
         {
             get{return registrationStatus;}
             set{registrationStatus = value;}
         }
-
+        /// <summary>
+        /// property for orders field
+        /// </summary>
         public List<Order> Orders
         {
             get{return orders;}
             set{orders = value;}
         }
-
+        /// <summary>
+        /// read only property for the merchant username
+        /// </summary>
         public string Username
         {
             get{return base.username;}
         }
+        /// <summary>
+        /// property for Products field
+        /// </summary>
         public List<Product> Products
         {
             get{return products;}
             set{products = value;}
         }
-
+        /// <summary>
+        /// property for Subscirbed Customers field
+        /// </summary>
         public List<Customer> Subscribers
         {
             get{return subscribers;}
             set{subscribers = value;}
         }
-
+        /// <summary>
+        /// merchant can use this method to add a product
+        /// </summary>
         public void AddProduct()
         {
             Product addedProduct = new Product(this);
@@ -87,7 +119,9 @@ namespace PassTask13
             Console.WriteLine("Product added and awaits approval.");
         }
 
-
+        /// <summary>
+        /// merchant can use this method to edit a product details
+        /// </summary>
         public void EditProduct()
         {
             if (products.Count == 0)
@@ -159,6 +193,9 @@ namespace PassTask13
             Console.WriteLine($"Product {selectedProduct.Id} updated successfully!");
         }
 
+        /// <summary>
+        /// merchant can use this method to delete a product
+        /// </summary>
         public void DeleteProduct()
         {
             if (products.Count == 0)
@@ -185,6 +222,9 @@ namespace PassTask13
             products.Remove(selectedProduct);
             Console.WriteLine("Product removed successfully");
         }
+        /// <summary>
+        /// merchant can view the products it is listed 
+        /// </summary>
         public void ViewProducts()
         {
             Console.WriteLine("The products you have listed--");
@@ -193,7 +233,9 @@ namespace PassTask13
                 Console.WriteLine($"{i + 1}. {products[i].Id}. {products[i].Name}. {products[i].Category}. {products[i].Price}");
             }
         }
-
+        /// <summary>
+        /// Merchant can update the status of the order
+        /// </summary>
         public void ManageOrder()
         {
             if (orders.Count == 0)
@@ -261,7 +303,9 @@ namespace PassTask13
                     break;
             }
         }
-
+        /// <summary>
+        /// merchant can view the invoices of orders a particular customer has made from it
+        /// </summary>
         public void ViewInvoices()
         {
             var merchantInvoices = Data.AllInvoices.Where(invoice => invoice.Merchant == this).ToList();
@@ -282,7 +326,11 @@ namespace PassTask13
             }
         }
 
-
+        /// <summary>
+        /// to check whether the enterd category is valid or not.
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns>bool</returns>
         private bool IsValidCategory(string category)
         { 
             return Enum.IsDefined(typeof(FoodCategory), category) ||

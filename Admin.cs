@@ -5,23 +5,42 @@ namespace PassTask13
 {
     public class Admin : User
     {
+        /// <summary>
+        /// List of approved registered merchants
+        /// </summary>
         private static List<Merchant> merchants = new List<Merchant>();
+        /// <summary>
+        /// List of approved registered customers
+        /// </summary>
         private static List<Customer> customers = new List<Customer>();
 
+        /// <summary>
+        /// read only property for the merchant list
+        /// </summary>
         public static List<Merchant> Merchants
         {
             get{return merchants;}
         }
-
+        /// <summary>
+        /// read onnly property for the customers list
+        /// </summary>
         public static List<Customer> Customers
         {
             get{return customers;}
         }
+        /// <summary>
+        /// inherited constructor for Admin
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Email"></param>
+        /// <param name="Password"></param>
         public Admin(string Username, string Email, string Password):base(Username,Email,Password)
         {
             
         }
-
+        /// <summary>
+        /// You can view the products a apporoved merchnat listed
+        /// </summary>
         public void CheckProductsByMerchant()
         {
             if (merchants.Count < 1)
@@ -60,7 +79,10 @@ namespace PassTask13
                 Console.WriteLine($"- {product.Name}, Category: {product.Category}, Price: {product.Price}");
             }
         }
-
+        /// <summary>
+        /// You can approve a product a merchant has added
+        /// </summary>
+        /// <param name="chosenProduct"></param>
         public void ApproveProduct(Product chosenProduct)
         {
             chosenProduct.Status = ProductStatus.APPROVED;
@@ -70,7 +92,10 @@ namespace PassTask13
 
             Console.WriteLine($"Product {chosenProduct.Name} approved successfully!");
         }
-
+        /// <summary>
+        /// You can reject a product a merchant has added
+        /// </summary>
+        /// <param name="chosenProduct"></param>
         public void RejectProduct(Product chosenProduct)
         {
             chosenProduct.Status = ProductStatus.REJECTED;
@@ -81,7 +106,9 @@ namespace PassTask13
 
             Console.WriteLine($"Product {chosenProduct.Name} has been rejected and removed from pending products.");
         }
-
+        /// <summary>
+        /// method to approve or reject any product listed
+        /// </summary>
         public void ReviewProducts()
         {
             Console.WriteLine("Pending products for approval:");
@@ -131,7 +158,9 @@ namespace PassTask13
                 Console.WriteLine("Invalid choice.");
             }
         }
-
+        /// <summary>
+        /// print out a invoice for an order a customer has made from a merchant
+        /// </summary>
         public void GetInvoice()
         {
             if (customers.Count == 0)
@@ -188,7 +217,9 @@ namespace PassTask13
             Console.WriteLine($"Invoice for Customer: {selectedCustomer.username}, Merchant: {selectedMerchant.Username}");
             Console.WriteLine($"Total Amount: ${totalAmount}");
         }
-
+        /// <summary>
+        /// Get customer details
+        /// </summary>
         public void ViewCustomerProfile()
         {
             if(customers.Count < 1)
@@ -231,7 +262,9 @@ namespace PassTask13
                 Console.WriteLine("The customer has not made any orders.");
             }
         }
-
+        /// <summary>
+        /// Get merchant details
+        /// </summary>
         public void ViewMerchantProfile()
         {
             if (merchants.Count < 1)
@@ -287,7 +320,9 @@ namespace PassTask13
                 Console.WriteLine("The merchant has not received any orders.");
             }
         }
-
+        /// <summary>
+        /// Approve a new register merchant
+        /// </summary>
         public void ApproveMerchant()
         {
             if (Data.RegisteredMerchants.Count == 0)
@@ -322,6 +357,9 @@ namespace PassTask13
             Console.WriteLine($"Merchant {selectedMerchant.username} approved successfully!");
         }
 
+        /// <summary>
+        /// reject a new register merchant
+        /// </summary>
         public void RejectMerchant()
         {
             if (Data.RegisteredMerchants.Count == 0)
@@ -354,7 +392,9 @@ namespace PassTask13
 
             Console.WriteLine($"Merchant {selectedMerchant.username} rejected successfully!");
         }
-
+        /// <summary>
+        /// approve a new register customer
+        /// </summary>
         public void ApproveCustomer()
         {
             if (Data.RegisteredCustomers.Count == 0)
@@ -390,7 +430,9 @@ namespace PassTask13
 
             Console.WriteLine($"Customer {selectedCustomer.username} approved successfully!");
         }
-
+        /// <summary>
+        /// reject a new register customer
+        /// </summary>
         public void RejectCustomer()
         {
             if (Data.RegisteredCustomers.Count == 0)

@@ -5,34 +5,62 @@ namespace PassTask13
 {
     public class Customer:User
     {
+        /// <summary>
+        /// coupons to use in making an order
+        /// </summary>
         private int coupons;
+        /// <summary>
+        /// Orders made by this customer
+        /// </summary>
         private List<Order> orders = new List<Order>();
+        /// <summary>
+        /// List of merchants subscribed to by this customer
+        /// </summary>
         private List<Merchant> subscribedMerchants =  new List<Merchant>();
+        /// <summary>
+        /// enum to check if the customer has been approved or not by the admin
+        /// </summary>
         private CustomerStatus customerStatus;
+        /// <summary>
+        /// empty constructor
+        /// </summary>
         public Customer() { }
-
+        /// <summary>
+        /// normal constructor
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Email"></param>
+        /// <param name="Password"></param>
         public Customer(string Username, string Email, string Password) 
             : base(Username, Email, Password) 
             { 
                 coupons = 10;
             }
-        
+        /// <summary>
+        /// property for Customer Status
+        /// </summary>
         public CustomerStatus CustomerStatus
         {
             get{return customerStatus;}
             set{customerStatus = value;}
         }
-
+        /// <summary>
+        /// Read only property for Order
+        /// </summary>
         public List<Order> Orders 
         {
             get{return orders;}
         }
-
+        /// <summary>
+        /// Read only property for merchants subscribed
+        /// </summary>
         public List<Merchant> SubscribedMerchants
         {
             get{return subscribedMerchants;}
         }
-
+        /// <summary>
+        /// Use this to subscribe to a merchant
+        /// </summary>
         public void Subscribe()
         {
             if(Admin.Merchants.Count < 1)
@@ -60,7 +88,9 @@ namespace PassTask13
             selectedMerchant.Subscribers.Add(this);
             Console.WriteLine($"Subscribed to {selectedMerchant.Username}");
         }
-
+        /// <summary>
+        /// Use this to unsubscribe to a merchant
+        /// </summary>
         public void Unsubscribe()
         {
             if(subscribedMerchants.Count < 1)
@@ -88,6 +118,9 @@ namespace PassTask13
             selectedMerchant.Subscribers.Remove(this);
             Console.WriteLine($"Unsubscribed from {selectedMerchant.Username}");
         }
+        /// <summary>
+        /// You can view the products listed by the subscirbed by the merchant by category
+        /// </summary>
         public void BrowseProducts()
         {
             if (subscribedMerchants.Count == 0)
@@ -132,7 +165,11 @@ namespace PassTask13
                 Console.WriteLine("Invalid merchant choice.");
             }
         }
-
+        /// <summary>
+        /// To get the subcategory of the merchant product
+        /// </summary>
+        /// <param name="merchant"></param>
+        /// <returns></returns>
         private List<string> GetProductSubcategoriesForMerchantCategory(Merchant merchant)
         {
             switch (merchant.MerchantCategory) // Assuming Merchant has a MerchantType property of type MerchantCategory
@@ -155,7 +192,10 @@ namespace PassTask13
                     return new List<string>();
             }
         }
-
+        /// <summary>
+        /// method to display the products. To be used in another method
+        /// </summary>
+        /// <param name="products"></param>
         private void DisplayProducts(List<Product> products)
         {
             if (products.Count == 0)
@@ -169,7 +209,9 @@ namespace PassTask13
                 Console.WriteLine($"Name: {product.Name}, Category: {product.Category}, Price: {product.Price}");
             }
         }
-
+        /// <summary>
+        /// You can make an order from a chosen merchant.
+        /// </summary>
         public void OrderProduct()
         {
             if (subscribedMerchants.Count == 0)
@@ -240,7 +282,9 @@ namespace PassTask13
 
             Console.WriteLine($"Ordered {selectedProduct.Name} using {selectedPaymentType}.");
         }
-
+        /// <summary>
+        /// You can cancel your order with this method
+        /// </summary>
         public void CancelOrder()
         {
             if (orders.Count == 0)
@@ -275,7 +319,9 @@ namespace PassTask13
             Data.CancelledOrders.Add(selectedOrder);
             Console.WriteLine($"Order {selectedOrder.Id} has been cancelled.");
         }
-
+        /// <summary>
+        /// Rate the product you have made an order
+        /// </summary>
         public void RateProduct()
         {
             Console.WriteLine("Rating an order");
@@ -314,6 +360,10 @@ namespace PassTask13
                 }
             } while (rating < 1 || rating > 5);
         }
+
+        /// <summary>
+        /// Get the invoices for where you made the order.
+        /// </summary>
         public void ViewInvoices()
         {
             var customerInvoices = Data.AllInvoices.Where(invoice => invoice.Customer == this).ToList();
