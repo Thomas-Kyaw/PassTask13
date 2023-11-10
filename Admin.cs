@@ -209,7 +209,7 @@ namespace PassTask13
 
             Merchant selectedMerchant = merchants[merchantChoice - 1];
 
-            Invoice invoice = new Invoice(selectedMerchant, selectedCustomer); // Pass the selected customer here
+            Invoice invoice = new Invoice(selectedMerchant, selectedCustomer); 
             Data.AllInvoices.Add(invoice);
 
             float totalAmount = invoice.CalculateTotal();
